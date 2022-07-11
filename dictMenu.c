@@ -1,49 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "inputFunc.h"
-#include "fileMenu.h"
-#include "editMenu.h"
 #include "dictMenu.h"
 
-
-int main()
+void showDictMenu()
 {
     int ans;
     int i;
-    const char menuItems[7][100] =
+    const char menuItems[6][100] =
     {
-        "1. Файл",
-        "2. Редактировать документ",
-        "3. Вывести на экран документ",
-        "4. Экспорт документа в файл txt",
-        "5. Справочник",
-        "6. О программе",
-        "7. Выход"
+        "1. Выбрать справочник",
+        "2. Вывести на экран",
+        "3. Редактировать запись в справочнике",
+        "4. Добавить запись в справочник",
+        "5. Удалить запись",
+        "6. Назад"
     };
 
     while(1)
     {
         system("clear");
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < 6; i++)
             printf("%s\n", menuItems[i]);
         printf("\nВведите пункт меню: ");
         scanf("%d", &ans);
         clearBuff();
         switch(ans)
         {
-            case 1: showFileMenu(); break;
-            case 2: showEditMenu(); break;
+            case 1: break;
+            case 2: break;
             case 3: break;
             case 4: break;
-            case 5: showDictMenu(); break;
-            case 6: break;
-            case 7: exit(0);
+            case 5: break;
+            case 6: return;
             default: {
                         system("clear");
                         printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения.");
                         wait();
                      }
-        }
-    }
-    return 0;
+         }
+     }
 }

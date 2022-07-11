@@ -3,45 +3,37 @@
 #include "inputFunc.h"
 #include "fileMenu.h"
 
-
-int main()
+void showFileMenu()
 {
     int ans;
     int i;
-    char menuItems[7][100] =
+    char menuItems[4][100] =
     {
-        "Файл",
-        "Редактировать документ",
-        "Вывести на экран документ",
-        "Экспорт документа в файл txt",
-        "Справочник",
-        "О программе",
-        "Выход"
+        "1. Открыть",
+        "2. Сохранить",
+        "3. Закрыть",
+        "4. Назад"
     };
 
     while(1)
     {
         system("clear");
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < 4; i++)
             printf("%s\n", menuItems[i]);
         printf("\nВведите пункт меню: ");
         scanf("%d", &ans);
         clearBuff();
         switch(ans)
         {
-            case 1: showFileMenu(); break;
+            case 1: break;
             case 2: break;
             case 3: break;
-            case 4: break;
-            case 5: break;
-            case 6: break;
-            case 7:
+            case 4: return;
             default: {
                         system("clear");
                         printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения.");
                         wait();
                      }
-        }
-    }
-    return 0;
+         }
+     }
 }

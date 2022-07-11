@@ -34,7 +34,7 @@ void showFileMenu()
         {
             case 1: open(); break;
             case 2: break;
-            case 3: break;
+            case 3: close(); break;
             case 4: return;
             default: {
                         system("clear");
@@ -57,17 +57,36 @@ void open()
     {
         if ((dir = opendir("./DATA")) != NULL)
         {
+            while ((ent = readdir(dir)) != NULL)
+            {
+                if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
+                    continue;
+                else
+                    putItem(ent->d_name, ++count);
+            }
+            closedir(dir);
+            count = 0;
+        }
+        else
+        {
+            system("clear");
+            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить");
+            wait();
+        }
+
+    }
+
+    if (!choosedFile)
+    {
+        if ((dir = opendir("./DATA")) != NULL)
+        {
             system("clear");
             while ((ent = readdir(dir)) != NULL)
             {
                 if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
                     continue;
                 else
-                {
-
                     printf("%d. %s\n", ++count, ent->d_name);
-                    putItem(ent->d_name, count);
-                }
             }
             closedir(dir);
             printf("\nВведите номер файла: ");
@@ -109,4 +128,12 @@ void putItem(char *itemName, int id)
     strcpy(newItem->dirItemName, itemName);
     if (!prevItem) headDirItems = newItem;
     else prevItem->next = newItem;
+}
+
+void close()
+{
+    choosedFile = NULL;
+    system("clear");
+    printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить");
+    wait();
 }

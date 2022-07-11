@@ -5,6 +5,8 @@
 void showFileMenu();
 void open();
 void putItem(char *, int);
+void close();
+
 extern  DIR_ITEM *headDirItems;
 extern  DIR_ITEM *choosedFile;
 

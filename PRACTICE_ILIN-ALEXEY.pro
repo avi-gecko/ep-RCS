@@ -14,4 +14,5 @@ HEADERS += \
     dictMenu.h \
     editMenu.h \
     fileMenu.h \
-    inputFunc.h
+    inputFunc.h \
+    structs.h

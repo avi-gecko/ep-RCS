@@ -4,6 +4,7 @@
 #include "fileMenu.h"
 #include "editMenu.h"
 #include "dictMenu.h"
+#include "structs.h"
 
 
 int main()
@@ -26,6 +27,8 @@ int main()
         system("clear");
         for (i = 0; i < 7; i++)
             printf("%s\n", menuItems[i]);
+        if (choosedFile)
+            printf("\nВыбранный файл %s", choosedFile->dirItemName);
         printf("\nВведите пункт меню: ");
         scanf("%d", &ans);
         clearBuff();

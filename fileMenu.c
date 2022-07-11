@@ -4,6 +4,11 @@
 #include "fileMenu.h"
 #include <dirent.h>
 #include <string.h>
+#include "structs.h"
+#include <malloc.h>
+
+DIR_ITEM *headDirItems = NULL;
+DIR_ITEM *choosedFile = NULL;
 
 void showFileMenu()
 {
@@ -44,24 +49,64 @@ void open()
 {
     DIR *dir = NULL;
     struct dirent *ent = NULL;
+    DIR_ITEM *nextItem;
     int count = 0;
-    if ((dir = opendir("./DATA")) != NULL)
+    int ans;
+
+    if (!headDirItems)
     {
-        system("clear");
-        while ((ent = readdir(dir)) != NULL)
+        if ((dir = opendir("./DATA")) != NULL)
         {
-            if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
-                continue;
-            else
-                printf("%d. %s\n", ++count, ent->d_name);
+            system("clear");
+            while ((ent = readdir(dir)) != NULL)
+            {
+                if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
+                    continue;
+                else
+                {
+
+                    printf("%d. %s\n", ++count, ent->d_name);
+                    putItem(ent->d_name, count);
+                }
+            }
+            closedir(dir);
+            printf("\nВведите номер файла: ");
+            scanf("%d", &ans);
+            clearBuff();
+            for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
+                if (ans == nextItem->id)
+                {
+                    choosedFile = nextItem;
+                    printf("\nВыбранный файл: %s\nНажмите клавишу ENTER, чтобы продолжить", choosedFile->dirItemName);
+                    break;
+                }
+            wait();
+            return;
         }
-        closedir(dir);
-        wait();
+        else
+        {
+            system("clear");
+            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить");
+            wait();
+        }
     }
     else
     {
         system("clear");
-        printf("Не удалось открыть директорию.");
+        printf("Вы уже выбрали файл %s\nНажмите клавишу ENTER, чтобы продолжить", choosedFile->dirItemName);
         wait();
+        return;
     }
+}
+
+void putItem(char *itemName, int id)
+{
+    DIR_ITEM *newItem, *nextItem, *prevItem = NULL;
+    for (nextItem = headDirItems; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
+    newItem = (DIR_ITEM *) malloc(sizeof(DIR_ITEM));
+    newItem->id = id;
+    newItem->next = nextItem;
+    strcpy(newItem->dirItemName, itemName);
+    if (!prevItem) headDirItems = newItem;
+    else prevItem->next = newItem;
 }

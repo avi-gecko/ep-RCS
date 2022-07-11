@@ -7,7 +7,7 @@ void showFileMenu()
 {
     int ans;
     int i;
-    char menuItems[4][100] =
+    const char menuItems[4][100] =
     {
         "1. Открыть",
         "2. Сохранить",

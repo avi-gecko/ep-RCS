@@ -38,7 +38,7 @@ void showFileMenu()
             case 4: return;
             default: {
                         system("clear");
-                        printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения.");
+                        printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения...");
                         wait();
                      }
          }
@@ -70,7 +70,7 @@ void open()
         else
         {
             system("clear");
-            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить");
+            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить...");
             wait();
         }
 
@@ -96,7 +96,7 @@ void open()
                 if (ans == nextItem->id)
                 {
                     choosedFile = nextItem;
-                    printf("\nВыбранный файл: %s\nНажмите клавишу ENTER, чтобы продолжить", choosedFile->dirItemName);
+                    printf("\nВыбранный файл: %s\nНажмите клавишу ENTER, чтобы продолжить...", choosedFile->dirItemName);
                     break;
                 }
             wait();
@@ -105,14 +105,14 @@ void open()
         else
         {
             system("clear");
-            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить");
+            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить...");
             wait();
         }
     }
     else
     {
         system("clear");
-        printf("Вы уже выбрали файл %s\nНажмите клавишу ENTER, чтобы продолжить", choosedFile->dirItemName);
+        printf("Вы уже выбрали файл %s\nНажмите клавишу ENTER, чтобы продолжить...", choosedFile->dirItemName);
         wait();
         return;
     }
@@ -134,6 +134,6 @@ void close()
 {
     choosedFile = NULL;
     system("clear");
-    printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить");
+    printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить...");
     wait();
 }

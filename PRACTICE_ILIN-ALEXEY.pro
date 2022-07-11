@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        about.c \
         dictMenu.c \
         editMenu.c \
         fileMenu.c \
@@ -11,6 +12,7 @@ SOURCES += \
         main.c
 
 HEADERS += \
+    about.h \
     dictMenu.h \
     editMenu.h \
     fileMenu.h \

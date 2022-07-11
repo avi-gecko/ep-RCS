@@ -5,7 +5,7 @@
 #include "editMenu.h"
 #include "dictMenu.h"
 #include "structs.h"
-
+#include "about.h"
 
 int main()
 {
@@ -39,7 +39,7 @@ int main()
             case 3: break;
             case 4: break;
             case 5: showDictMenu(); break;
-            case 6: break;
+            case 6: showAbout(); break;
             case 7: exit(0);
             default: {
                         system("clear");

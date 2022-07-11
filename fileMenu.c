@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "inputFunc.h"
 #include "fileMenu.h"
+#include <dirent.h>
+#include <string.h>
 
 void showFileMenu()
 {
@@ -25,7 +27,7 @@ void showFileMenu()
         clearBuff();
         switch(ans)
         {
-            case 1: break;
+            case 1: open(); break;
             case 2: break;
             case 3: break;
             case 4: return;
@@ -36,4 +38,30 @@ void showFileMenu()
                      }
          }
      }
+}
+
+void open()
+{
+    DIR *dir = NULL;
+    struct dirent *ent = NULL;
+    int count = 0;
+    if ((dir = opendir("./DATA")) != NULL)
+    {
+        system("clear");
+        while ((ent = readdir(dir)) != NULL)
+        {
+            if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
+                continue;
+            else
+                printf("%d. %s\n", ++count, ent->d_name);
+        }
+        closedir(dir);
+        wait();
+    }
+    else
+    {
+        system("clear");
+        printf("Не удалось открыть директорию.");
+        wait();
+    }
 }

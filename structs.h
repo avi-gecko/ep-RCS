@@ -8,4 +8,14 @@ typedef struct DIR_ITEM
     struct DIR_ITEM *next;
 } DIR_ITEM;
 
+typedef struct DATA
+{
+    int id;
+    char *codeItem;
+    int idType;
+    int idPlace;
+    char *date;
+    int cost;
+} DATA;
+
 #endif // STRUCTS_H

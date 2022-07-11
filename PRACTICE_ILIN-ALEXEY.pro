@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         about.c \
         dictMenu.c \
+        documentView.c \
         editMenu.c \
         fileMenu.c \
         inputFunc.c \
@@ -14,6 +15,7 @@ SOURCES += \
 HEADERS += \
     about.h \
     dictMenu.h \
+    documentView.h \
     editMenu.h \
     fileMenu.h \
     inputFunc.h \

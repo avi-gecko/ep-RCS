@@ -6,6 +6,7 @@
 #include <string.h>
 #include "structs.h"
 #include <malloc.h>
+#include "documentView.h"
 
 DIR_ITEM *headDirItems = NULL;
 DIR_ITEM *choosedFile = NULL;
@@ -132,7 +133,13 @@ void putItem(char *itemName, int id)
 
 void close()
 {
-    choosedFile = NULL;
+    if (choosedFile)
+        choosedFile = NULL;
+    if (data)
+    {
+        free(data);
+        data = NULL;
+    }
     system("clear");
     printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить...");
     wait();

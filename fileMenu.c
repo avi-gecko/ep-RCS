@@ -52,7 +52,7 @@ void open()
     struct dirent *ent = NULL;
     DIR_ITEM *nextItem;
     int count = 0;
-    int ans;
+    unsigned int ans;
 
     if (!headDirItems)
     {
@@ -139,6 +139,21 @@ void close()
     {
         free(data);
         data = NULL;
+    }
+    if (dict_t)
+    {
+        free(dict_t);
+        dict_t = NULL;
+    }
+    if (dict_p)
+    {
+        free(dict_p);
+        dict_p = NULL;
+    }
+    if (main_data)
+    {
+        free(main_data);
+        main_data = NULL;
     }
     system("clear");
     printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить...");

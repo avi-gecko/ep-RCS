@@ -135,25 +135,33 @@ void close()
 {
     if (choosedFile)
         choosedFile = NULL;
-    if (data)
+    if (headData)
     {
-        free(data);
-        data = NULL;
+        DATA *nextItem, *prevItem = headData;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            free(prevItem);
+        headData = NULL;
     }
-    if (dict_t)
+    if (headDict_t)
     {
-        free(dict_t);
-        dict_t = NULL;
+        DICT_T *nextItem, *prevItem = headDict_t;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            free(prevItem);
+        headDict_t = NULL;
     }
-    if (dict_p)
+    if (headDict_p)
     {
-        free(dict_p);
-        dict_p = NULL;
+        DICT_P *nextItem, *prevItem = headDict_p;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            free(prevItem);
+        headDict_p = NULL;
     }
-    if (main_data)
+    if (headMain_data)
     {
-        free(main_data);
-        main_data = NULL;
+        MAIN_DATA *nextItem, *prevItem = headMain_data;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            free(prevItem);
+        headMain_data = NULL;
     }
     system("clear");
     printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить...");

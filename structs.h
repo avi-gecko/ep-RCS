@@ -16,18 +16,21 @@ typedef struct DATA
     unsigned int idPlace;
     char *date;
     unsigned int cost;
+    struct DATA *next;
 } DATA;
 
 typedef struct DICT_T
 {
     unsigned int id;
     char *dictName;
+    struct DICT_T *next;
 } DICT_T;
 
 typedef struct DICT_P
 {
     unsigned int id;
     char *dictName;
+    struct DICT_P *next;
 } DICT_P;
 
 typedef struct MAIN_DATA
@@ -38,6 +41,7 @@ typedef struct MAIN_DATA
     char *place;
     char *date;
     unsigned int cost;
+    struct MAIN_DATA *next;
 } MAIN_DATA;
 
 #endif // STRUCTS_H

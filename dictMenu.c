@@ -9,12 +9,12 @@ void showDictMenu()
     int i;
     const char menuItems[6][100] =
     {
-        "1. Выбрать справочник",
-        "2. Вывести на экран",
-        "3. Редактировать запись в справочнике",
-        "4. Добавить запись в справочник",
-        "5. Удалить запись",
-        "6. Назад"
+        "1. Select directory",
+        "2. Display directory",
+        "3. Edit a record in a directory",
+        "4. Add a record in a directory",
+        "5. Delete a record",
+        "6. Back"
     };
 
     while(1)
@@ -22,7 +22,7 @@ void showDictMenu()
         system("clear");
         for (i = 0; i < 6; i++)
             printf("%s\n", menuItems[i]);
-        printf("\nВведите пункт меню: ");
+        printf("\nEnter a menu item: ");
         scanf("%d", &ans);
         clearBuff();
         switch(ans)
@@ -35,7 +35,7 @@ void showDictMenu()
             case 6: return;
             default: {
                         system("clear");
-                        printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения.");
+                        printf("There's no such menu item.\nPress ENTER to continue...");
                         wait();
                      }
          }

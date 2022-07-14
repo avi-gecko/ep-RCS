@@ -14,30 +14,42 @@ DATA *headData = NULL;
 DICT_T *headDict_t = NULL;
 DICT_P *headDict_p = NULL;
 MAIN_DATA *headMain_data = NULL;
-static FILE *in = NULL, *fDict_T = NULL, *fDict_P = NULL;
+FILE *in = NULL, *fDict_T = NULL, *fDict_P = NULL;
 
-void openDoc()
+void openFDict_P()
+{
+    char path[256] = "./DATA/";
+    strcat(path, choosedFile->dirItemName);
+    if ((fDict_P = fopen("./DICTIONARY/place.db", "r")) == NULL)
+    {
+        system("clear");
+        printf("File can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}
+
+void openFDict_T()
+{
+    char path[256] = "./DATA/";
+    strcat(path, choosedFile->dirItemName);
+    if ((fDict_T = fopen("./DICTIONARY/type.db", "r")) == NULL)
+    {
+        system("clear");
+        printf("File can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}
+
+void openIn()
 {
     char path[256] = "./DATA/";
     strcat(path, choosedFile->dirItemName);
     if ((in = fopen(path, "r")) == NULL)
     {
         system("clear");
-        printf("Неудалось открыть файл.\nНажмите клавишу ENTER, чтобы продолжить...");
-        wait();
-        return;
-    }
-    if ((fDict_T = fopen("./DICTIONARY/type.db", "r")) == NULL)
-    {
-        system("clear");
-        printf("Неудалось открыть файл.\nНажмите клавишу ENTER, чтобы продолжить...");
-        wait();
-        return;
-    }
-    if ((fDict_P = fopen("./DICTIONARY/place.db", "r")) == NULL)
-    {
-        system("clear");
-        printf("Неудалось открыть файл.\nНажмите клавишу ENTER, чтобы продолжить...");
+        printf("File can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }
@@ -45,6 +57,15 @@ void openDoc()
 
 void createData()
 {
+    if (!in)
+        openIn();
+    if (!numOfEnt)
+    {
+        while (!feof(in))
+            if (fgetc(in) == '\n')
+                numOfEnt++;
+        rewind(in);
+    }
     char *temp = NULL;
     size_t len = 0;
     ssize_t read;
@@ -66,12 +87,13 @@ void createData()
         temp = NULL;
     }
     fclose(in);
+    in = NULL;
 }
 
 void putData(unsigned int id, char *codeItem, unsigned int idType, unsigned int idPlace, char *date, unsigned int cost)
 {
     DATA *newItem, *nextItem, *prevItem = NULL;
-    for (nextItem = headData; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
+    for (nextItem = headData; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
     newItem = (DATA *) malloc(sizeof(DATA));
     newItem->id = id;
     newItem->codeItem = codeItem;
@@ -79,17 +101,31 @@ void putData(unsigned int id, char *codeItem, unsigned int idType, unsigned int 
     newItem->idPlace = idPlace;
     newItem->date = date;
     newItem->cost = cost;
-    newItem->next = nextItem;
-    if (!prevItem) headData = newItem;
-    else prevItem->next = newItem;
+    if (nextItem)
+        newItem->next = nextItem;
+    else
+        newItem->next = NULL;
+    if (!prevItem)
+        headData = newItem;
+    else
+        prevItem->next = newItem;
 }
 
 void createDict_T()
 {
+    if (!fDict_T)
+        openFDict_T();
+    if (!numOfDict_T)
+    {
+        while (!feof(fDict_T))
+            if (fgetc(fDict_T) == '\n')
+                numOfDict_T++;
+        rewind(fDict_T);
+    }
+    unsigned int id;
     char *temp = NULL;
     size_t len = 0;
     ssize_t read;
-    unsigned int id;
     char *dictName = NULL;
     while ((read = getline(&temp, &len, fDict_T)) != EOF)
     {
@@ -98,13 +134,8 @@ void createDict_T()
         putDict_T(id, dictName);
         temp = NULL;
     }
-    /*if (!numOfDict_T)
-    {
-        DICT_T *nextItem, *prevItem = NULL;
-        for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
-        numOfDict_T = prevItem->id;
-    }*/
     fclose(fDict_T);
+    fDict_T = NULL;
 }
 
 void putDict_T(unsigned int id, char *dictName)
@@ -121,6 +152,15 @@ void putDict_T(unsigned int id, char *dictName)
 
 void createDict_P()
 {
+    if (!fDict_P)
+        openFDict_P();
+    if (!numOfDict_P)
+    {
+        while (!feof(fDict_P))
+            if (fgetc(fDict_P) == '\n')
+                numOfDict_P++;
+        rewind(fDict_P);
+    }
     char *temp = NULL;
     size_t len = 0;
     ssize_t read;
@@ -133,13 +173,8 @@ void createDict_P()
         putDict_P(id, dictName);
         temp = NULL;
     }
-  /*  if (!numOfDict_P)
-    {
-        DICT_P *nextItem, *prevItem = NULL;
-        for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
-        numOfDict_P = prevItem->id;
-    }*/
     fclose(fDict_P);
+    fDict_P = NULL;
 }
 
 void putDict_P(unsigned int id, char *dictName)
@@ -149,41 +184,31 @@ void putDict_P(unsigned int id, char *dictName)
     newItem = (DICT_P *) malloc(sizeof(DICT_P));
     newItem->id = id;
     newItem->dictName = dictName;
-    newItem->next = nextItem;
+    newItem->next = NULL;
     if (!prevItem) headDict_p = newItem;
     else prevItem->next = newItem;
 }
 
-void creatMain_Data()
+void createMain_Data()
 {
     DICT_P *nextItemP;
     DICT_T *nextItemT;
-    DATA *nextItemD, *prevItemD = NULL;
-    if (!numOfEnt)
-    {
-        for (nextItemD = headData; nextItemD != NULL; prevItemD = nextItemD, nextItemD = nextItemD->next);
-        numOfEnt = prevItemD->id;
-    }
-    unsigned int i;
+    DATA *nextItemD;
     unsigned int id;
     char *codeItem = NULL;
     char *type = NULL; unsigned int idType;
     char *place = NULL; unsigned int idPlace;
     char *date = NULL;
     unsigned int cost;
-    for (i = 1; i <= numOfEnt; i++)
+    for (nextItemD = headData; nextItemD != NULL; nextItemD = nextItemD->next)
     {
-        for (nextItemD = headData; nextItemD != NULL; nextItemD = nextItemD->next)
-            if (i == nextItemD->id)
-            {
-                id = nextItemD->id;
-                codeItem = nextItemD->codeItem;
-                date = nextItemD->date;
-                cost = nextItemD->cost;
-                idType = nextItemD->idType;
-                idPlace = nextItemD->idPlace;
-                break;
-            }
+        id = nextItemD->id;
+        codeItem = nextItemD->codeItem;
+        date = nextItemD->date;
+        cost = nextItemD->cost;
+        idType = nextItemD->idType;
+        idPlace = nextItemD->idPlace;
+
         for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
             if (idType == nextItemT->id)
             {
@@ -200,10 +225,28 @@ void creatMain_Data()
     }
 }
 
+void matchItem(unsigned int idType, unsigned int idPlace, char **type, char **place)
+{
+    DICT_P *nextItemP;
+    DICT_T *nextItemT;
+    for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
+        if (idType == nextItemT->id)
+        {
+            *type = nextItemT->dictName;
+            break;
+        }
+    for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
+        if (idPlace == nextItemP->id)
+        {
+            *place = nextItemP->dictName;
+            break;
+        }
+}
+
 void putMain_Data(unsigned int id, char *codeItem, char *type, char *place, char *date, unsigned int cost)
 {
     MAIN_DATA *newItem, *nextItem, *prevItem = NULL;
-    for (nextItem = headMain_data; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
+    for (nextItem = headMain_data; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
     newItem = (MAIN_DATA *) malloc(sizeof(MAIN_DATA));
     newItem->id = id;
     newItem->codeItem = codeItem;
@@ -211,33 +254,41 @@ void putMain_Data(unsigned int id, char *codeItem, char *type, char *place, char
     newItem->place = place;
     newItem->date = date;
     newItem->cost = cost;
-    newItem->next = nextItem;
-    if (!prevItem) headMain_data = newItem;
-    else prevItem->next = newItem;
+    if (nextItem)
+        newItem->next = nextItem;
+    else
+        newItem->next = NULL;
+    if (!prevItem)
+        headMain_data = newItem;
+    else
+        prevItem->next = newItem;
 }
 
 void showDoc()
 {
-    if (choosedFile)
-        openDoc();
+    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    {
+        createData();
+        createDict_T();
+        createDict_P();
+        createMain_Data();
+    }
     else
+    if (!choosedFile)
     {
         system("clear");
-        printf("файл не выбран. Неудалось открыть файл.\nНажмите клавишу ENTER, чтобы продолжить...");
+        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }
-    if (!headData)
-        createData();
-    if (!headDict_t)
-        createDict_T();
-    if (!headDict_p)
-        createDict_P();
-    if (!headMain_data)
-        creatMain_Data();
     system("clear");
     MAIN_DATA *nextItem;
+    printf("--------------------------------------------------------------------------\n");
+    printf("|%-6s|%-9s|%-21s|%-15s|%-8s|%8s|\n", "ID", "Item code", "Type", "Place", "Date", "Cost");
+    printf("--------------------------------------------------------------------------\n");
     for (nextItem = headMain_data; nextItem != NULL; nextItem = nextItem->next)
-        printf("| %-5d | %6s |\t %-25s \t| %-12s \t| %8s | %8d |\n", nextItem->id, nextItem->codeItem, nextItem->type, nextItem->place, nextItem->date, nextItem->cost);
+        printf("|%-6d|%-9s|%-21s|%-15s|%-8s|%8d|\n", nextItem->id, nextItem->codeItem, nextItem->type, nextItem->place, nextItem->date, nextItem->cost);
+    printf("--------------------------------------------------------------------------\n");
+    printf("\nAmount of records: %d\nPress ENTER to continue...", numOfEnt);
     wait();
 }

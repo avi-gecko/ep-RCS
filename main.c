@@ -14,13 +14,13 @@ int main()
     int i;
     const char menuItems[7][100] =
     {
-        "1. Файл",
-        "2. Редактировать документ",
-        "3. Вывести на экран документ",
-        "4. Экспорт документа в файл txt",
-        "5. Справочник",
-        "6. О программе",
-        "7. Выход"
+        "1. File",
+        "2. Edit document",
+        "3. Display document",
+        "4. Export document to txt file",
+        "5. Directory",
+        "6. About the program",
+        "7. Exit"
     };
 
     while(1)
@@ -29,8 +29,8 @@ int main()
         for (i = 0; i < 7; i++)
             printf("%s\n", menuItems[i]);
         if (choosedFile)
-            printf("\nВыбранный файл %s", choosedFile->dirItemName);
-        printf("\nВведите пункт меню: ");
+            printf("\nSelected file %s", choosedFile->dirItemName);
+        printf("\nEnter a menu item: ");
         scanf("%d", &ans);
         clearBuff();
         switch(ans)
@@ -44,7 +44,7 @@ int main()
             case 7: exit(0);
             default: {
                         system("clear");
-                        printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения.");
+                        printf("There's no such menu item.\nPress ENTER to continue...");
                         wait();
                      }
         }

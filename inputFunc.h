@@ -3,5 +3,6 @@
 
 void clearBuff();
 void wait();
+void clearLine(char **);
 
 #endif // INPUTFUNC_H

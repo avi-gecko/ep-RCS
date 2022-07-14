@@ -17,10 +17,10 @@ void showFileMenu()
     int i;
     const char menuItems[4][100] =
     {
-        "1. Открыть",
-        "2. Сохранить",
-        "3. Закрыть",
-        "4. Назад"
+        "1. Open",
+        "2. Save",
+        "3. Close",
+        "4. Back"
     };
 
     while(1)
@@ -28,7 +28,7 @@ void showFileMenu()
         system("clear");
         for (i = 0; i < 4; i++)
             printf("%s\n", menuItems[i]);
-        printf("\nВведите пункт меню: ");
+        printf("\nEnter a menu item: ");
         scanf("%d", &ans);
         clearBuff();
         switch(ans)
@@ -39,7 +39,7 @@ void showFileMenu()
             case 4: return;
             default: {
                         system("clear");
-                        printf("Такого пункта меню нет, нажмите клавишу ENTER для продолжения...");
+                        printf("There's no such menu item.\nPress ENTER to continue...");
                         wait();
                      }
          }
@@ -71,7 +71,7 @@ void open()
         else
         {
             system("clear");
-            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить...");
+            printf("Directory can't be opened.\nPress ENTER to continue...");
             wait();
         }
 
@@ -90,14 +90,14 @@ void open()
                     printf("%d. %s\n", ++count, ent->d_name);
             }
             closedir(dir);
-            printf("\nВведите номер файла: ");
+            printf("\nEnter a file number: ");
             scanf("%d", &ans);
             clearBuff();
             for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
                 if (ans == nextItem->id)
                 {
                     choosedFile = nextItem;
-                    printf("\nВыбранный файл: %s\nНажмите клавишу ENTER, чтобы продолжить...", choosedFile->dirItemName);
+                    printf("\nSelected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
                     break;
                 }
             wait();
@@ -106,14 +106,14 @@ void open()
         else
         {
             system("clear");
-            printf("Не удалось открыть директорию.\nНажмите клавишу ENTER, чтобы продолжить...");
+            printf("Directory can't be opened.\nPress ENTER to continue...");
             wait();
         }
     }
     else
     {
         system("clear");
-        printf("Вы уже выбрали файл %s\nНажмите клавишу ENTER, чтобы продолжить...", choosedFile->dirItemName);
+        printf("You already have selected file.%s\nPress ENTER to continue...", choosedFile->dirItemName);
         wait();
         return;
     }
@@ -163,7 +163,10 @@ void close()
             free(prevItem);
         headMain_data = NULL;
     }
+    numOfEnt = 0;
+    numOfDict_P = 0;
+    numOfDict_T = 0;
     system("clear");
-    printf("Файл успешно закрыт.\nНажмите клавишу ENTER, чтобы продолжить...");
+    printf("File is successfully closed.\nPress ENTER to continue...");
     wait();
 }

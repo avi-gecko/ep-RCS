@@ -6,6 +6,6 @@
 void showAbout()
 {
     system("clear");
-    printf("СУБД\nНаписана Алексеем Ильином ИЦТМС 1-5\nНажмите клавишу ENTER, чтобы продолжить...");
+    printf("DBMS\nCreated by Alexey Il'in ICTMS 1-5\nPress ENTER to continue...");
     wait();
 }

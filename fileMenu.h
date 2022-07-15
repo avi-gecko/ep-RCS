@@ -3,12 +3,12 @@
 #include "structs.h"
 
 void showFileMenu();
-void open();
+void selectFile();
 void putItem(char *, int);
 void close();
 
 extern  DIR_ITEM *headDirItems;
-extern  DIR_ITEM *choosedFile;
+extern  DIR_ITEM *selectedFile;
 
 
 #endif // FILEMENU_H

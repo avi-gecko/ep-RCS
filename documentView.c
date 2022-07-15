@@ -18,8 +18,6 @@ FILE *in = NULL, *fDict_T = NULL, *fDict_P = NULL;
 
 void openFDict_P()
 {
-    char path[256] = "./DATA/";
-    strcat(path, choosedFile->dirItemName);
     if ((fDict_P = fopen("./DICTIONARY/place.db", "r")) == NULL)
     {
         system("clear");
@@ -31,8 +29,6 @@ void openFDict_P()
 
 void openFDict_T()
 {
-    char path[256] = "./DATA/";
-    strcat(path, choosedFile->dirItemName);
     if ((fDict_T = fopen("./DICTIONARY/type.db", "r")) == NULL)
     {
         system("clear");
@@ -45,7 +41,7 @@ void openFDict_T()
 void openIn()
 {
     char path[256] = "./DATA/";
-    strcat(path, choosedFile->dirItemName);
+    strcat(path, selectedFile->dirItemName);
     if ((in = fopen(path, "r")) == NULL)
     {
         system("clear");
@@ -269,7 +265,7 @@ void putMain_Data(unsigned int id, char *codeItem, char *type, char *place, char
 
 void showDoc()
 {
-    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
         createDict_T();
@@ -277,10 +273,10 @@ void showDoc()
         createMain_Data();
     }
     else
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
-        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }

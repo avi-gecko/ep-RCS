@@ -9,7 +9,7 @@
 #include "documentView.h"
 
 DIR_ITEM *headDirItems = NULL;
-DIR_ITEM *choosedFile = NULL;
+DIR_ITEM *selectedFile = NULL;
 
 void showFileMenu()
 {
@@ -33,7 +33,7 @@ void showFileMenu()
         clearBuff();
         switch(ans)
         {
-            case 1: open(); break;
+            case 1: selectFile(); break;
             case 2: break;
             case 3: close(); break;
             case 4: return;
@@ -46,7 +46,7 @@ void showFileMenu()
      }
 }
 
-void open()
+void selectFile()
 {
     DIR *dir = NULL;
     struct dirent *ent = NULL;
@@ -77,7 +77,7 @@ void open()
         }
     }
 
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
         for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
@@ -88,8 +88,8 @@ void open()
         for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
             if (ans == nextItem->id)
             {
-                choosedFile = nextItem;
-                printf("\nSelected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
+                selectedFile = nextItem;
+                printf("\nSelected file: %s\nPress ENTER to continue...", selectedFile->dirItemName);
                 break;
             }
         wait();
@@ -98,7 +98,7 @@ void open()
     else
     {
         system("clear");
-        printf("You already have selected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
+        printf("You already have selected file: %s\nPress ENTER to continue...", selectedFile->dirItemName);
         wait();
         return;
     }
@@ -118,8 +118,8 @@ void putItem(char *itemName, int id)
 
 void close()
 {
-    if (choosedFile)
-        choosedFile = NULL;
+    if (selectedFile)
+        selectedFile = NULL;
     if (headData)
     {
         DATA *nextItem, *prevItem = headData;

@@ -58,7 +58,7 @@ void addRecord()
     ssize_t read = 0;
     int isMatched = 0;
 
-    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
         createDict_T();
@@ -66,10 +66,10 @@ void addRecord()
         createMain_Data();
     }
     else
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
-        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }
@@ -173,7 +173,7 @@ void addRecord()
 
 void delRecord()
 {
-    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
         createDict_T();
@@ -181,10 +181,10 @@ void delRecord()
         createMain_Data();
     }
     else
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
-        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }
@@ -246,7 +246,7 @@ void delRecord()
 
 void editRecord()
 {
-    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
         createDict_T();
@@ -254,10 +254,10 @@ void editRecord()
         createMain_Data();
     }
     else
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
-        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }

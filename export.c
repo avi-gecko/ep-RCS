@@ -8,7 +8,7 @@
 
 void exportToTxt()
 {
-    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
         createDict_T();
@@ -16,10 +16,10 @@ void exportToTxt()
         createMain_Data();
     }
     else
-    if (!choosedFile)
+    if (!selectedFile)
     {
         system("clear");
-        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
         wait();
         return;
     }

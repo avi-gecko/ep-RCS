@@ -16,9 +16,9 @@ int main()
     const char menuItems[7][100] =
     {
         "1. File",
-        "2. Edit document",
-        "3. Display document",
-        "4. Export document to txt file",
+        "2. Edit the document",
+        "3. Display the document",
+        "4. Export the document to the txt file",
         "5. Directory",
         "6. About the program",
         "7. Exit"
@@ -29,8 +29,10 @@ int main()
         system("clear");
         for (i = 0; i < 7; i++)
             printf("%s\n", menuItems[i]);
-        if (choosedFile)
-            printf("\nSelected file %s", choosedFile->dirItemName);
+        if (selectedFile)
+            printf("\nSelected file: %s", selectedFile->dirItemName);
+        if (selectedDict)
+            printf("\nSelected directory: %s" , selectedDict);
         printf("\nEnter a menu item: ");
         scanf("%d", &ans);
         clearBuff();

@@ -6,5 +6,6 @@ extern char *selectedDict;
 void showDictMenu();
 void selectDict();
 void closeDict();
+void showDict();
 
 #endif // DICTMENU_H

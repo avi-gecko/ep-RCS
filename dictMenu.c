@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "inputFunc.h"
 #include "dictMenu.h"
+#include "documentView.h"
+#include "structs.h"
 
 char *selectedDict = NULL;
 
@@ -32,7 +34,7 @@ void showDictMenu()
         {
             case 1: selectDict(); break;
             case 2: closeDict(); break;
-            case 3: break;
+            case 3: showDict(); break;
             case 4: break;
             case 5: break;
             case 6: break;
@@ -79,7 +81,73 @@ void selectDict()
 void closeDict()
 {
     selectedDict = NULL;
+    if (headDict_t)
+    {
+        DICT_T *nextItem, *prevItem = headDict_t;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->dictName);
+            free(prevItem);
+        }
+        free(prevItem->dictName);
+        free(prevItem);
+        headDict_t = NULL;
+    }
+    if (headDict_p)
+    {
+        DICT_P *nextItem, *prevItem = headDict_p;
+        for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->dictName);
+            free(prevItem);
+        }
+        free(prevItem->dictName);
+        free(prevItem);
+        headDict_p = NULL;
+    }
     system("clear");
     printf("File is successfully closed.\nPress ENTER to continue...");
     wait();
+}
+
+void showDict()
+{
+    if (!selectedDict)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "type.db" && !headDict_t)
+        createDict_T();
+    if (selectedDict == "place.db" && !headDict_t)
+        createDict_P();
+    if (selectedDict == "type.db")
+    {
+        DICT_T *nextItem;
+        system("clear");
+        printf("--------------------\n");
+        printf("|%-3s|%-15s|\n", "ID", "Directory name");
+        printf("--------------------\n");
+        for (nextItem = headDict_t; nextItem != NULL; nextItem = nextItem->next)
+            printf("|%-3d|%-15s|\n", nextItem->id, nextItem->dictName);
+        printf("--------------------\n");
+        printf("\nAmount of records: %d\nPress ENTER to continue...", numOfDict_T);
+        wait();
+    }
+    if (selectedDict == "place.db")
+    {
+        DICT_P *nextItem;
+        system("clear");
+        printf("--------------------\n");
+        printf("|%-3s|%-15s|\n", "ID", "Directory name");
+        printf("--------------------\n");
+        for (nextItem = headDict_p; nextItem != NULL; nextItem = nextItem->next)
+            printf("|%-3d|%-15s|\n", nextItem->id, nextItem->dictName);
+        printf("--------------------\n");
+        printf("\nAmount of records: %d\nPress ENTER to continue...", numOfDict_P);
+        wait();
+    }
+
 }

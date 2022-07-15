@@ -29,7 +29,7 @@ void showEditMenu()
         clearBuff();
         switch(ans)
         {
-            case 1: addItem(); break;
+            case 1: addRecord(); break;
             case 2: break;
             case 3: break;
             case 4: return;
@@ -42,7 +42,7 @@ void showEditMenu()
      }
 }
 
-void addItem()
+void addRecord()
 {
     DICT_P *nextItemP;
     DICT_T *nextItemT;

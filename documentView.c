@@ -78,12 +78,13 @@ void createData()
     while ((read = getline(&temp, &len, in)) != EOF)
     {
         id = atoi(strtok(temp, ";"));
-        codeItem = strtok(NULL, ";");
+        codeItem = strdup(strtok(NULL, ";"));
         idType = atoi(strtok(NULL, ";"));
         idPlace = atoi(strtok(NULL, ";"));
-        date = strtok(NULL, ";");
+        date = strdup(strtok(NULL, ";"));
         cost = atoi(strtok(NULL, ";"));
         putData(id, codeItem, idType, idPlace, date, cost);
+        free(temp);
         temp = NULL;
     }
     fclose(in);
@@ -130,8 +131,9 @@ void createDict_T()
     while ((read = getline(&temp, &len, fDict_T)) != EOF)
     {
         id = atoi(strtok(temp, ";"));
-        dictName = strtok(NULL, ";");
+        dictName = strdup(strtok(NULL, ";"));
         putDict_T(id, dictName);
+        free(temp);
         temp = NULL;
     }
     fclose(fDict_T);
@@ -145,7 +147,7 @@ void putDict_T(unsigned int id, char *dictName)
     newItem = (DICT_T *) malloc(sizeof(DICT_T));
     newItem->id = id;
     newItem->dictName = dictName;
-    newItem->next = nextItem;
+    newItem->next = NULL;
     if (!prevItem) headDict_t = newItem;
     else prevItem->next = newItem;
 }
@@ -169,8 +171,9 @@ void createDict_P()
     while ((read = getline(&temp, &len, fDict_P)) != EOF)
     {
         id = atoi(strtok(temp, ";"));
-        dictName = strtok(NULL, ";");
+        dictName = strdup(strtok(NULL, ";"));
         putDict_P(id, dictName);
+        free(temp);
         temp = NULL;
     }
     fclose(fDict_P);

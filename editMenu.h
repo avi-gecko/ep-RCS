@@ -2,6 +2,6 @@
 #define EDITMENU_H
 
 void showEditMenu();
-void addItem();
+void addRecord();
 
 #endif // EDITMENU_H

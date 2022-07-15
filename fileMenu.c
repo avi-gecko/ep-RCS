@@ -73,47 +73,32 @@ void open()
             system("clear");
             printf("Directory can't be opened.\nPress ENTER to continue...");
             wait();
+            return;
         }
-
     }
 
     if (!choosedFile)
     {
-        if ((dir = opendir("./DATA")) != NULL)
-        {
-            system("clear");
-            while ((ent = readdir(dir)) != NULL)
+        system("clear");
+        for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
+            printf("%d. %-s\n", nextItem->id, nextItem->dirItemName);
+        printf("\nEnter a file number: ");
+        scanf("%d", &ans);
+        clearBuff();
+        for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
+            if (ans == nextItem->id)
             {
-                if ((strcmp(ent->d_name, ".\0")) == 0 || (strcmp(ent->d_name, "..\0")) == 0)
-                    continue;
-                else
-                    printf("%d. %s\n", ++count, ent->d_name);
+                choosedFile = nextItem;
+                printf("\nSelected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
+                break;
             }
-            closedir(dir);
-            printf("\nEnter a file number: ");
-            scanf("%d", &ans);
-            clearBuff();
-            for (nextItem = headDirItems; nextItem != NULL; nextItem = nextItem->next)
-                if (ans == nextItem->id)
-                {
-                    choosedFile = nextItem;
-                    printf("\nSelected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
-                    break;
-                }
-            wait();
-            return;
-        }
-        else
-        {
-            system("clear");
-            printf("Directory can't be opened.\nPress ENTER to continue...");
-            wait();
-        }
+        wait();
+        return;
     }
     else
     {
         system("clear");
-        printf("You already have selected file.%s\nPress ENTER to continue...", choosedFile->dirItemName);
+        printf("You already have selected file: %s\nPress ENTER to continue...", choosedFile->dirItemName);
         wait();
         return;
     }
@@ -139,21 +124,31 @@ void close()
     {
         DATA *nextItem, *prevItem = headData;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->date);
+            free(prevItem->codeItem);
             free(prevItem);
+        }
         headData = NULL;
     }
     if (headDict_t)
     {
         DICT_T *nextItem, *prevItem = headDict_t;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->dictName);
             free(prevItem);
+        }
         headDict_t = NULL;
     }
     if (headDict_p)
     {
         DICT_P *nextItem, *prevItem = headDict_p;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->dictName);
             free(prevItem);
+        }
         headDict_p = NULL;
     }
     if (headMain_data)

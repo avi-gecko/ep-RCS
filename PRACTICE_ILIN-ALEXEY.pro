@@ -8,6 +8,7 @@ SOURCES += \
         dictMenu.c \
         documentView.c \
         editMenu.c \
+        export.c \
         fileMenu.c \
         inputFunc.c \
         main.c
@@ -17,6 +18,7 @@ HEADERS += \
     dictMenu.h \
     documentView.h \
     editMenu.h \
+    export.h \
     fileMenu.h \
     inputFunc.h \
     structs.h

@@ -7,6 +7,7 @@
 #include "structs.h"
 #include "about.h"
 #include "documentView.h"
+#include "export.h"
 
 int main()
 {
@@ -38,7 +39,7 @@ int main()
             case 1: showFileMenu(); break;
             case 2: showEditMenu(); break;
             case 3: showDoc(); break;
-            case 4: break;
+            case 4: exportToTxt(); break;
             case 5: showDictMenu(); break;
             case 6: showAbout(); break;
             case 7: exit(0);

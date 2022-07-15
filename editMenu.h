@@ -4,5 +4,6 @@
 void showEditMenu();
 void addRecord();
 void delRecord();
+void editRecord();
 
 #endif // EDITMENU_H

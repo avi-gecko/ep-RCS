@@ -23,7 +23,7 @@ void exportToTxt()
         wait();
         return;
     }
-    FILE *out;
+    FILE *out = NULL;
     if ((out = fopen("./out.txt", "w")) == NULL)
     {
         system("clear");
@@ -39,6 +39,7 @@ void exportToTxt()
         fprintf(out, "|%-6d|%-9s|%-21s|%-15s|%-8s|%8d|\n", nextItem->id, nextItem->codeItem, nextItem->type, nextItem->place, nextItem->date, nextItem->cost);
     fprintf(out, "--------------------------------------------------------------------------\n");
     fclose(out);
+    out = NULL;
     system("clear");
     printf("File is successfuly exported to txt.\nPress ENTER to continue...");
     wait();

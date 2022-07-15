@@ -30,8 +30,8 @@ void showEditMenu()
         switch(ans)
         {
             case 1: addRecord(); break;
-            case 2: delRecord();break;
-            case 3: break;
+            case 2: delRecord(); break;
+            case 3: editRecord(); break;
             case 4: return;
             default: {
                         system("clear");
@@ -57,6 +57,7 @@ void addRecord()
     size_t len = 0;
     ssize_t read = 0;
     int isMatched = 0;
+
     if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
     {
         createData();
@@ -84,7 +85,7 @@ void addRecord()
     system("clear");
     printf("Enter a code of RCS: ");
     read = getline(&codeItem, &len, stdin);
-    if (read > 8)
+    if (read > 7)
     {
         system("clear");
         printf("Entered number of symbols is more than 6.\nPress ENTER to continue...");
@@ -142,6 +143,7 @@ void addRecord()
     date[strcspn(date, "\n")] = '\0';
     printf("\nEnter a cost of RCS: ");
     scanf("%d", &cost);
+    clearBuff();
     newItem->codeItem = codeItem;
     newItem->idType = idType;
     newItem->idPlace = idPlace;
@@ -166,7 +168,6 @@ void addRecord()
     putMain_Data(newItem->id, codeItem, type, place, date, newItem->cost);
     system("clear");
     printf("Additing is successful.\nPress ENTER to continue...");
-    clearBuff();
     wait();
 }
 
@@ -237,7 +238,133 @@ void delRecord()
             }
             break;
         }
+    numOfEnt--;
     system("clear");
     printf("Deleting is successful.\nPress ENTER to continue...");
+    wait();
+}
+
+void editRecord()
+{
+    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    {
+        createData();
+        createDict_T();
+        createDict_P();
+        createMain_Data();
+    }
+    else
+    if (!choosedFile)
+    {
+        system("clear");
+        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    system("clear");
+    unsigned int id;
+    char *codeItem = NULL;
+    unsigned int idType; char *type = NULL;
+    unsigned int idPlace; char *place = NULL;
+    char *date;
+    unsigned int cost;
+    int isMatched = 0;
+    int isMatchedG = 0;
+    size_t len = 0;
+    ssize_t read = 0;
+    printf("Enter an id of item to delete: ");
+    scanf("%d", &id);
+    clearBuff();
+    DATA *nextItem;
+    DICT_T *nextItemT;
+    DICT_P *nextItemP;
+    for (nextItem = headData; nextItem != NULL; nextItem = nextItem->next)
+        if (id == nextItem->id)
+        {
+            isMatchedG = 1;
+            printf("\nEnter a code of RCS: ");
+            read = getline(&codeItem, &len, stdin);
+            if (read > 7)
+            {
+                system("clear");
+                printf("Entered number of symbols is more than 6.\nPress ENTER to continue...");
+                free(codeItem);
+                wait();
+                return;
+            }
+            codeItem[strcspn(codeItem, "\n")] = '\0';
+            read = 0;
+            len = 0;
+            free(nextItem->codeItem);
+            nextItem->codeItem = codeItem;
+            printf("\nEnter a ID of type of RCS: ");
+            scanf("%d", &idType);
+            clearBuff();
+            for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
+                if (idType == nextItemT->id)
+                    isMatched = 1;
+            if (!isMatched)
+            {
+                system("clear");
+                printf("The ID %d doesn't exist.\nPress ENTER to continue...", idType);
+                free(codeItem);
+                wait();
+                return;
+            }
+            isMatched = 0;
+            printf("\nEnter a ID of of place in the warehouse of RCS: ");
+            scanf("%d", &idPlace);
+            clearBuff();
+            for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
+            if (idPlace == nextItemP->id)
+                isMatched = 1;
+            if (!isMatched)
+            {
+                system("clear");
+                printf("The ID %d doesn't exist.\nPress ENTER to continue...", idPlace);
+                free(codeItem);
+                wait();
+                return;
+            }
+            printf("\nEnter a date of production of RCS: ");
+            read = getline(&date, &len, stdin);
+            if (read > 9)
+            {
+                system("clear");
+                printf("Entered number of symbols is more than 8.\nPress ENTER to continue...");
+                free(codeItem);
+                free(date);
+                wait();
+                return;
+            }
+            date[strcspn(date, "\n")] = '\0';
+            free(nextItem->date);
+            nextItem->date = date;
+            printf("\nEnter a cost of RCS: ");
+            scanf("%d", &cost);
+            clearBuff();
+            break;
+        }
+    if (!isMatchedG)
+    {
+        system("clear");
+        printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+        wait();
+        return;
+    }
+    MAIN_DATA *nextItemM;
+    for (nextItemM = headMain_data; nextItemM != NULL; nextItemM = nextItemM->next)
+        if (id == nextItemM->id)
+        {
+            nextItemM->codeItem = codeItem;
+            nextItemM->date = date;
+            matchItem(idType, idPlace, &type, &place);
+            nextItemM->type = type;
+            nextItemM->place = place;
+            nextItemM->cost = cost;
+            break;
+        }
+    system("clear");
+    printf("Editing is successful.\nPress ENTER to continue...");
     wait();
 }

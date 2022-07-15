@@ -129,6 +129,9 @@ void close()
             free(prevItem->codeItem);
             free(prevItem);
         }
+        free(prevItem->date);
+        free(prevItem->codeItem);
+        free(prevItem);
         headData = NULL;
     }
     if (headDict_t)
@@ -139,6 +142,8 @@ void close()
             free(prevItem->dictName);
             free(prevItem);
         }
+        free(prevItem->dictName);
+        free(prevItem);
         headDict_t = NULL;
     }
     if (headDict_p)
@@ -149,6 +154,8 @@ void close()
             free(prevItem->dictName);
             free(prevItem);
         }
+        free(prevItem->dictName);
+        free(prevItem);
         headDict_p = NULL;
     }
     if (headMain_data)
@@ -156,6 +163,7 @@ void close()
         MAIN_DATA *nextItem, *prevItem = headMain_data;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             free(prevItem);
+        free(prevItem);
         headMain_data = NULL;
     }
     numOfEnt = 0;

@@ -3,5 +3,6 @@
 
 void showEditMenu();
 void addRecord();
+void delRecord();
 
 #endif // EDITMENU_H

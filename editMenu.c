@@ -30,7 +30,7 @@ void showEditMenu()
         switch(ans)
         {
             case 1: addRecord(); break;
-            case 2: break;
+            case 2: delRecord();break;
             case 3: break;
             case 4: return;
             default: {
@@ -74,6 +74,8 @@ void addRecord()
     }
     for (nextItem = headData; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
     {
+        if (headData->id != 1)
+            break;
         if (prevItem && nextItem)
             if(nextItem->id - prevItem->id != 1)
                 break;
@@ -162,4 +164,80 @@ void addRecord()
     }
     matchItem(idType, idPlace, &type, &place);
     putMain_Data(newItem->id, codeItem, type, place, date, newItem->cost);
+    system("clear");
+    printf("Additing is successful.\nPress ENTER to continue...");
+    clearBuff();
+    wait();
+}
+
+void delRecord()
+{
+    if (choosedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
+    {
+        createData();
+        createDict_T();
+        createDict_P();
+        createMain_Data();
+    }
+    else
+    if (!choosedFile)
+    {
+        system("clear");
+        printf("Files isn't choosed. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    system("clear");
+    unsigned int id;
+    int isMatched = 0;
+    printf("Enter an id of item to delete: ");
+    scanf("%d", &id);
+    clearBuff();
+    DATA *nextItem, *prevItem = NULL;
+    for (nextItem = headData; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        if (id == nextItem->id)
+        {
+            isMatched = 1;
+            if (!prevItem)
+            {
+                headData = nextItem->next;
+                free(nextItem->codeItem);
+                free(nextItem->date);
+                free(nextItem);
+            }
+            else
+            {
+                prevItem->next = nextItem->next;
+                free(nextItem->codeItem);
+                free(nextItem->date);
+                free(nextItem);
+            }
+            break;
+        }
+    if (!isMatched)
+    {
+        system("clear");
+        printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+        wait();
+        return;
+    }
+    MAIN_DATA *nextItemM, *prevItemM = NULL;
+    for (nextItemM = headMain_data; nextItemM != NULL; prevItemM = nextItemM, nextItemM = nextItemM->next)
+        if (id == nextItemM->id)
+        {
+            if (!prevItemM)
+            {
+                headMain_data = nextItemM->next;
+                free(nextItemM);
+            }
+            else
+            {
+                prevItemM->next = nextItemM->next;
+                free(nextItemM);
+            }
+            break;
+        }
+    system("clear");
+    printf("Deleting is successful.\nPress ENTER to continue...");
+    wait();
 }

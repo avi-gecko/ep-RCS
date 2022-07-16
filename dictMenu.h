@@ -10,5 +10,6 @@ void showDict();
 void addRecordDict();
 void delRecordDict();
 void editRecordDict();
+void saveDict();
 
 #endif // DICTMENU_H

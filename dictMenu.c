@@ -12,21 +12,22 @@ void showDictMenu()
 {
     int ans;
     int i;
-    const char menuItems[7][100] =
+    const char menuItems[8][100] =
     {
         "1. Select a directory",
-        "2. Close the directory",
-        "3. Display the directory",
-        "4. Edit a record in the directory",
-        "5. Add a record in the directory",
-        "6. Delete a record in the directory",
-        "7. Back"
+        "2. Save the directory",
+        "3. Close the directory",
+        "4. Display the directory",
+        "5. Edit a record in the directory",
+        "6. Add a record in the directory",
+        "7. Delete a record in the directory",
+        "8. Back"
     };
 
     while(1)
     {
         system("clear");
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < 8; i++)
             printf("%s\n", menuItems[i]);
         printf("\nEnter a menu item: ");
         scanf("%d", &ans);
@@ -34,12 +35,13 @@ void showDictMenu()
         switch(ans)
         {
             case 1: selectDict(); break;
-            case 2: closeDict(); break;
-            case 3: showDict(); break;
-            case 4: editRecordDict();break;
-            case 5: addRecordDict(); break;
-            case 6: delRecordDict(); break;
-            case 7: return;
+            case 2: saveDict(); break;
+            case 3: closeDict(); break;
+            case 4: showDict(); break;
+            case 5: editRecordDict();break;
+            case 6: addRecordDict(); break;
+            case 7: delRecordDict(); break;
+            case 8: return;
             default: {
                         system("clear");
                         printf("There's no such menu item.\nPress ENTER to continue...");
@@ -93,6 +95,7 @@ void closeDict()
         free(prevItem->dictName);
         free(prevItem);
         headDict_t = NULL;
+        numOfDict_T = 0;
     }
     if (headDict_p)
     {
@@ -105,6 +108,7 @@ void closeDict()
         free(prevItem->dictName);
         free(prevItem);
         headDict_p = NULL;
+        numOfDict_P = 0;
     }
     system("clear");
     printf("File is successfully closed.\nPress ENTER to continue...");
@@ -435,6 +439,47 @@ void editRecordDict()
         }
         system("clear");
         printf("Editing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}
+
+void saveDict()
+{
+    if (!selectedDict)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "type.db" && !headDict_t)
+        createDict_T();
+    if (selectedDict == "place.db" && !headDict_p)
+        createDict_P();
+    if (selectedDict == "type.db")
+    {
+        openFDict_T("w");
+        DICT_T *nextItem;
+        for (nextItem = headDict_t; nextItem != NULL; nextItem = nextItem->next)
+            fprintf(fDict_T, "%d;%s;\n", nextItem->id, nextItem->dictName);
+        fclose(fDict_T);
+        fDict_T = NULL;
+        system("clear");
+        printf("Saving is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "place.db")
+    {
+        openFDict_P("w");
+        DICT_P *nextItem;
+        for (nextItem = headDict_p; nextItem != NULL; nextItem = nextItem->next)
+            fprintf(fDict_P, "%d;%s;\n", nextItem->id, nextItem->dictName);
+        fclose(fDict_P);
+        fDict_P = NULL;
+        system("clear");
+        printf("Saving is successful.\nPress ENTER to continue...");
         wait();
         return;
     }

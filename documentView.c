@@ -211,6 +211,7 @@ void createMain_Data()
     unsigned int cost;
     for (nextItemD = headData; nextItemD != NULL; nextItemD = nextItemD->next)
     {
+        int isMatched = 0;
         id = nextItemD->id;
         codeItem = nextItemD->codeItem;
         date = nextItemD->date;
@@ -221,15 +222,33 @@ void createMain_Data()
         for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
             if (idType == nextItemT->id)
             {
+                isMatched = 1;
                 type = strdup(nextItemT->dictName);
                 break;
             }
+        if (!isMatched)
+        {
+            system("clear");
+            printf("There's no ID %d in the type.db directory.\nPress ENTER to continue...", idType);
+            wait();
+            return;
+        }
+        isMatched = 0;
         for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
             if (idPlace == nextItemP->id)
             {
+                isMatched = 1;
                 place = strdup(nextItemP->dictName);
                 break;
             }
+        if (!isMatched)
+        {
+            free(type);
+            system("clear");
+            printf("There's no ID %d in the place.db directory.\nPress ENTER to continue...", idPlace);
+            wait();
+            return;
+        }
         putMain_Data(id, codeItem, type, place, date, cost);
     }
 }

@@ -8,5 +8,6 @@ void selectDict();
 void closeDict();
 void showDict();
 void addRecordDict();
+void delRecordDict();
 
 #endif // DICTMENU_H

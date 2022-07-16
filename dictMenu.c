@@ -38,7 +38,7 @@ void showDictMenu()
             case 3: showDict(); break;
             case 4: break;
             case 5: addRecordDict(); break;
-            case 6: break;
+            case 6: delRecordDict(); break;
             case 7: return;
             default: {
                         system("clear");
@@ -241,6 +241,101 @@ void addRecordDict()
         }
         system("clear");
         printf("Additing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}
+
+void delRecordDict()
+{
+    if (!selectedDict)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "type.db" && !headDict_t)
+        createDict_T();
+    if (selectedDict == "place.db" && !headDict_p)
+        createDict_P();
+    if (selectedDict == "type.db")
+    {
+        int isMatched = 0;
+        unsigned int id;
+        system("clear");
+        printf("Enter an id of item to delete: ");
+        scanf("%d", &id);
+        clearBuff();
+        DICT_T *nextItem, *prevItem = NULL;
+        for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            if (id == nextItem->id)
+            {
+                isMatched = 1;
+                if (!prevItem)
+                {
+                    headDict_t = nextItem->next;
+                    free(nextItem->dictName);
+                    free(nextItem);
+                }
+                else
+                {
+                    prevItem->next = nextItem->next;
+                    free(nextItem->dictName);
+                    free(nextItem);
+                }
+                break;
+            }
+        if (!isMatched)
+        {
+            system("clear");
+            printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+            wait();
+            return;
+        }
+        numOfDict_T--;
+        system("clear");
+        printf("Deleting is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "place.db")
+    {
+        int isMatched = 0;
+        unsigned int id;
+        system("clear");
+        printf("Enter an id of item to delete: ");
+        scanf("%d", &id);
+        clearBuff();
+        DICT_P *nextItem, *prevItem = NULL;
+        for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            if (id == nextItem->id)
+            {
+                isMatched = 1;
+                if (!prevItem)
+                {
+                    headDict_p = nextItem->next;
+                    free(nextItem->dictName);
+                    free(nextItem);
+                }
+                else
+                {
+                    prevItem->next = nextItem->next;
+                    free(nextItem->dictName);
+                    free(nextItem);
+                }
+                break;
+            }
+        if (!isMatched)
+        {
+            system("clear");
+            printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+            wait();
+            return;
+        }
+        numOfDict_P--;
+        system("clear");
+        printf("Deleting is successful.\nPress ENTER to continue...");
         wait();
         return;
     }

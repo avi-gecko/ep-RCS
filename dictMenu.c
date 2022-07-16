@@ -128,12 +128,12 @@ void showDict()
     {
         DICT_T *nextItem;
         system("clear");
-        printf("--------------------\n");
+        printf(".-------------------.\n");
         printf("|%-3s|%-15s|\n", "ID", "Directory name");
-        printf("--------------------\n");
+        printf("|-------------------|\n");
         for (nextItem = headDict_t; nextItem != NULL; nextItem = nextItem->next)
             printf("|%-3d|%-15s|\n", nextItem->id, nextItem->dictName);
-        printf("--------------------\n");
+        printf("'-------------------'\n");
         printf("\nAmount of records: %d\nPress ENTER to continue...", numOfDict_T);
         wait();
     }
@@ -141,12 +141,12 @@ void showDict()
     {
         DICT_P *nextItem;
         system("clear");
-        printf("--------------------\n");
+        printf(".-------------------.\n");
         printf("|%-3s|%-15s|\n", "ID", "Directory name");
-        printf("--------------------\n");
+        printf("|-------------------|\n");
         for (nextItem = headDict_p; nextItem != NULL; nextItem = nextItem->next)
             printf("|%-3d|%-15s|\n", nextItem->id, nextItem->dictName);
-        printf("--------------------\n");
+        printf("'-------------------'\n");
         printf("\nAmount of records: %d\nPress ENTER to continue...", numOfDict_P);
         wait();
     }

@@ -15,12 +15,12 @@ void exportToTxt()
         wait();
         return;
     }
-    if (!headData)
-        createData();
     if (!headDict_t)
         createDict_T();
     if (!headDict_p)
         createDict_P();
+    if (!headData)
+        createData();
     if (!headMain_data)
         createMain_Data();
     FILE *out = NULL;

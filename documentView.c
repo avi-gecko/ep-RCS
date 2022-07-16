@@ -282,22 +282,22 @@ void showDoc()
         wait();
         return;
     }
-    if (!headData)
-        createData();
     if (!headDict_t)
         createDict_T();
     if (!headDict_p)
         createDict_P();
+    if (!headData)
+        createData();
     if (!headMain_data)
         createMain_Data();
     system("clear");
     MAIN_DATA *nextItem;
-    printf("--------------------------------------------------------------------------\n");
+    printf(".------------------------------------------------------------------------.\n");
     printf("|%-6s|%-9s|%-21s|%-15s|%-8s|%8s|\n", "ID", "Item code", "Type", "Place", "Date", "Cost");
-    printf("--------------------------------------------------------------------------\n");
+    printf("|------------------------------------------------------------------------|\n");
     for (nextItem = headMain_data; nextItem != NULL; nextItem = nextItem->next)
         printf("|%-6d|%-9s|%-21s|%-15s|%-8s|%8d|\n", nextItem->id, nextItem->codeItem, nextItem->type, nextItem->place, nextItem->date, nextItem->cost);
-    printf("--------------------------------------------------------------------------\n");
+    printf("'------------------------------------------------------------------------'\n");
     printf("\nAmount of records: %d\nPress ENTER to continue...", numOfEnt);
     wait();
 }

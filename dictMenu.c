@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "inputFunc.h"
 #include "dictMenu.h"
 #include "documentView.h"
@@ -36,7 +37,7 @@ void showDictMenu()
             case 2: closeDict(); break;
             case 3: showDict(); break;
             case 4: break;
-            case 5: break;
+            case 5: addRecordDict(); break;
             case 6: break;
             case 7: return;
             default: {
@@ -121,7 +122,7 @@ void showDict()
     }
     if (selectedDict == "type.db" && !headDict_t)
         createDict_T();
-    if (selectedDict == "place.db" && !headDict_t)
+    if (selectedDict == "place.db" && !headDict_p)
         createDict_P();
     if (selectedDict == "type.db")
     {
@@ -151,3 +152,98 @@ void showDict()
     }
 
 }
+
+void addRecordDict()
+{
+    if (!selectedDict)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "type.db" && !headDict_t)
+        createDict_T();
+    if (selectedDict == "place.db" && !headDict_p)
+        createDict_P();
+    if (selectedDict == "type.db")
+    {
+        DICT_T *nextItem, *prevItem = NULL, *newItem;
+        char *dictName = NULL;
+        size_t len = 0;
+        for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            if (headDict_t->id != 1)
+                break;
+            if (prevItem && nextItem)
+                if(nextItem->id - prevItem->id != 1)
+                    break;
+        }
+        newItem = (DICT_T *) malloc(sizeof(DICT_T));
+        system("clear");
+        printf("Enter a new type: ");
+        getline(&dictName, &len, stdin);
+        dictName[strcspn(dictName, "\n")] = '\0';
+        newItem->dictName = dictName;
+        if (nextItem)
+            newItem->next = nextItem;
+        else
+            newItem->next = NULL;
+        numOfDict_T++;
+        if (!prevItem)
+        {
+            headDict_t = newItem;
+            newItem->id = 1;
+        }
+        else
+        {
+            prevItem->next = newItem;
+            newItem->id = prevItem->id + 1;
+        }
+        system("clear");
+        printf("Additing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "place.db")
+    {
+        DICT_P *nextItem, *prevItem = NULL, *newItem;
+        char *dictName = NULL;
+        size_t len = 0;
+        for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            if (headDict_p->id != 1)
+                break;
+            if (prevItem && nextItem)
+                if(nextItem->id - prevItem->id != 1)
+                    break;
+        }
+        newItem = (DICT_P *) malloc(sizeof(DICT_P));
+        system("clear");
+        printf("Enter a new type: ");
+        getline(&dictName, &len, stdin);
+        dictName[strcspn(dictName, "\n")] = '\0';
+        newItem->dictName = dictName;
+        if (nextItem)
+            newItem->next = nextItem;
+        else
+            newItem->next = NULL;
+        numOfDict_P++;
+        if (!prevItem)
+        {
+            headDict_p = newItem;
+            newItem->id = 1;
+        }
+        else
+        {
+            prevItem->next = newItem;
+            newItem->id = prevItem->id + 1;
+        }
+        system("clear");
+        printf("Additing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}
+
+

@@ -139,13 +139,18 @@ void createDict_T()
 void putDict_T(unsigned int id, char *dictName)
 {
     DICT_T *newItem, *nextItem, *prevItem = NULL;
-    for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
+    for (nextItem = headDict_t; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
     newItem = (DICT_T *) malloc(sizeof(DICT_T));
     newItem->id = id;
     newItem->dictName = dictName;
-    newItem->next = NULL;
-    if (!prevItem) headDict_t = newItem;
-    else prevItem->next = newItem;
+    if (nextItem)
+        newItem->next = nextItem;
+    else
+        newItem->next = NULL;
+    if (!prevItem)
+        headDict_t = newItem;
+    else
+        prevItem->next = newItem;
 }
 
 void createDict_P()
@@ -179,13 +184,18 @@ void createDict_P()
 void putDict_P(unsigned int id, char *dictName)
 {
     DICT_P *newItem, *nextItem, *prevItem = NULL;
-    for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
+    for (nextItem = headDict_p; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
     newItem = (DICT_P *) malloc(sizeof(DICT_P));
     newItem->id = id;
     newItem->dictName = dictName;
-    newItem->next = NULL;
-    if (!prevItem) headDict_p = newItem;
-    else prevItem->next = newItem;
+    if (nextItem)
+        newItem->next = nextItem;
+    else
+        newItem->next = NULL;
+    if (!prevItem)
+        headDict_p = newItem;
+    else
+        prevItem->next = newItem;
 }
 
 void createMain_Data()
@@ -211,13 +221,13 @@ void createMain_Data()
         for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
             if (idType == nextItemT->id)
             {
-                type = nextItemT->dictName;
+                type = strdup(nextItemT->dictName);
                 break;
             }
         for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
             if (idPlace == nextItemP->id)
             {
-                place = nextItemP->dictName;
+                place = strdup(nextItemP->dictName);
                 break;
             }
         putMain_Data(id, codeItem, type, place, date, cost);
@@ -231,13 +241,13 @@ void matchItem(unsigned int idType, unsigned int idPlace, char **type, char **pl
     for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
         if (idType == nextItemT->id)
         {
-            *type = nextItemT->dictName;
+            *type = strdup(nextItemT->dictName);
             break;
         }
     for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
         if (idPlace == nextItemP->id)
         {
-            *place = nextItemP->dictName;
+            *place = strdup(nextItemP->dictName);
             break;
         }
 }
@@ -265,14 +275,6 @@ void putMain_Data(unsigned int id, char *codeItem, char *type, char *place, char
 
 void showDoc()
 {
-    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
-    {
-        createData();
-        createDict_T();
-        createDict_P();
-        createMain_Data();
-    }
-    else
     if (!selectedFile)
     {
         system("clear");
@@ -280,6 +282,14 @@ void showDoc()
         wait();
         return;
     }
+    if (!headData)
+        createData();
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headMain_data)
+        createMain_Data();
     system("clear");
     MAIN_DATA *nextItem;
     printf("--------------------------------------------------------------------------\n");

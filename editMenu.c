@@ -43,10 +43,23 @@ void showEditMenu()
 }
 
 void addRecord()
-{
-    DICT_P *nextItemP;
-    DICT_T *nextItemT;
-    DATA *newItem, *prevItem = NULL, *nextItem;
+{   
+    if (!selectedFile)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (!headData)
+        createData();
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headMain_data)
+        createMain_Data();
+
     char *codeItem = NULL;
     unsigned int idType;
     unsigned int idPlace;
@@ -58,21 +71,7 @@ void addRecord()
     ssize_t read = 0;
     int isMatched = 0;
 
-    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
-    {
-        createData();
-        createDict_T();
-        createDict_P();
-        createMain_Data();
-    }
-    else
-    if (!selectedFile)
-    {
-        system("clear");
-        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
-        wait();
-        return;
-    }
+    DATA *newItem, *prevItem = NULL, *nextItem;
     for (nextItem = headData; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
     {
         if (headData->id != 1)
@@ -100,6 +99,7 @@ void addRecord()
     printf("\nEnter a ID of type of RCS: ");
     scanf("%d", &idType);
     clearBuff();
+    DICT_T *nextItemT;
     for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
         if (idType == nextItemT->id)
             isMatched = 1;
@@ -116,6 +116,7 @@ void addRecord()
     printf("\nEnter a ID of of place in the warehouse of RCS: ");
     scanf("%d", &idPlace);
     clearBuff();
+    DICT_P *nextItemP;
     for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
     if (idPlace == nextItemP->id)
         isMatched = 1;
@@ -173,14 +174,6 @@ void addRecord()
 
 void delRecord()
 {
-    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
-    {
-        createData();
-        createDict_T();
-        createDict_P();
-        createMain_Data();
-    }
-    else
     if (!selectedFile)
     {
         system("clear");
@@ -188,9 +181,19 @@ void delRecord()
         wait();
         return;
     }
-    system("clear");
+    if (!headData)
+        createData();
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headMain_data)
+        createMain_Data();
+
     unsigned int id;
     int isMatched = 0;
+
+    system("clear");
     printf("Enter an id of item to delete: ");
     scanf("%d", &id);
     clearBuff();
@@ -246,14 +249,6 @@ void delRecord()
 
 void editRecord()
 {
-    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
-    {
-        createData();
-        createDict_T();
-        createDict_P();
-        createMain_Data();
-    }
-    else
     if (!selectedFile)
     {
         system("clear");
@@ -261,7 +256,15 @@ void editRecord()
         wait();
         return;
     }
-    system("clear");
+    if (!headData)
+        createData();
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headMain_data)
+        createMain_Data();
+
     unsigned int id;
     char *codeItem = NULL;
     unsigned int idType; char *type = NULL;
@@ -272,12 +275,12 @@ void editRecord()
     int isMatchedG = 0;
     size_t len = 0;
     ssize_t read = 0;
+
+    system("clear");
     printf("Enter an id of item to delete: ");
     scanf("%d", &id);
     clearBuff();
     DATA *nextItem;
-    DICT_T *nextItemT;
-    DICT_P *nextItemP;
     for (nextItem = headData; nextItem != NULL; nextItem = nextItem->next)
         if (id == nextItem->id)
         {
@@ -300,6 +303,7 @@ void editRecord()
             printf("\nEnter a ID of type of RCS: ");
             scanf("%d", &idType);
             clearBuff();
+            DICT_T *nextItemT;
             for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
                 if (idType == nextItemT->id)
                     isMatched = 1;
@@ -315,6 +319,7 @@ void editRecord()
             printf("\nEnter a ID of of place in the warehouse of RCS: ");
             scanf("%d", &idPlace);
             clearBuff();
+            DICT_P *nextItemP;
             for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
             if (idPlace == nextItemP->id)
                 isMatched = 1;

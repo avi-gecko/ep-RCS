@@ -8,14 +8,6 @@
 
 void exportToTxt()
 {
-    if (selectedFile && (!headData && !headDict_t && !headDict_p && !headMain_data))
-    {
-        createData();
-        createDict_T();
-        createDict_P();
-        createMain_Data();
-    }
-    else
     if (!selectedFile)
     {
         system("clear");
@@ -23,6 +15,14 @@ void exportToTxt()
         wait();
         return;
     }
+    if (!headData)
+        createData();
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headMain_data)
+        createMain_Data();
     FILE *out = NULL;
     if ((out = fopen("./out.txt", "w")) == NULL)
     {

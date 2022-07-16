@@ -7,6 +7,7 @@
 #include "structs.h"
 #include <malloc.h>
 #include "documentView.h"
+#include "dictMenu.h"
 
 DIR_ITEM *headDirItems = NULL;
 DIR_ITEM *selectedFile = NULL;
@@ -110,7 +111,7 @@ void putItem(char *itemName, int id)
     for (nextItem = headDirItems; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next);
     newItem = (DIR_ITEM *) malloc(sizeof(DIR_ITEM));
     newItem->id = id;
-    newItem->next = nextItem;
+    newItem->next = NULL;
     strcpy(newItem->dirItemName, itemName);
     if (!prevItem) headDirItems = newItem;
     else prevItem->next = newItem;
@@ -134,7 +135,7 @@ void close()
         free(prevItem);
         headData = NULL;
     }
-    if (headDict_t)
+    if (headDict_t && !selectedDict)
     {
         DICT_T *nextItem, *prevItem = headDict_t;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
@@ -145,8 +146,9 @@ void close()
         free(prevItem->dictName);
         free(prevItem);
         headDict_t = NULL;
+        numOfDict_T = 0;
     }
-    if (headDict_p)
+    if (headDict_p && !selectedDict)
     {
         DICT_P *nextItem, *prevItem = headDict_p;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
@@ -157,18 +159,23 @@ void close()
         free(prevItem->dictName);
         free(prevItem);
         headDict_p = NULL;
+        numOfDict_P = 0;
     }
     if (headMain_data)
     {
         MAIN_DATA *nextItem, *prevItem = headMain_data;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+        {
+            free(prevItem->place);
+            free(prevItem->type);
             free(prevItem);
+        }
+        free(prevItem->place);
+        free(prevItem->type);
         free(prevItem);
         headMain_data = NULL;
     }
     numOfEnt = 0;
-    numOfDict_P = 0;
-    numOfDict_T = 0;
     system("clear");
     printf("File is successfully closed.\nPress ENTER to continue...");
     wait();

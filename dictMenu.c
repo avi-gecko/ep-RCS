@@ -36,7 +36,7 @@ void showDictMenu()
             case 1: selectDict(); break;
             case 2: closeDict(); break;
             case 3: showDict(); break;
-            case 4: break;
+            case 4: editRecordDict();break;
             case 5: addRecordDict(); break;
             case 6: delRecordDict(); break;
             case 7: return;
@@ -168,9 +168,9 @@ void addRecordDict()
         createDict_P();
     if (selectedDict == "type.db")
     {
-        DICT_T *nextItem, *prevItem = NULL, *newItem;
         char *dictName = NULL;
         size_t len = 0;
+        DICT_T *nextItem, *prevItem = NULL, *newItem;
         for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             if (headDict_t->id != 1)
@@ -208,9 +208,9 @@ void addRecordDict()
     }
     if (selectedDict == "place.db")
     {
-        DICT_P *nextItem, *prevItem = NULL, *newItem;
         char *dictName = NULL;
         size_t len = 0;
+        DICT_P *nextItem, *prevItem = NULL, *newItem;
         for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             if (headDict_p->id != 1)
@@ -357,4 +357,85 @@ void delRecordDict()
     }
 }
 
-
+void editRecordDict()
+{
+    if (!selectedDict)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "type.db" && !headDict_t)
+        createDict_T();
+    if (selectedDict == "place.db" && !headDict_p)
+        createDict_P();
+    if (selectedDict == "type.db")
+    {
+        int isMatched = 0;
+        unsigned int id;
+        char *dictName = NULL;
+        size_t len = 0;
+        system("clear");
+        printf("Enter an ID of item to edit: ");
+        scanf("%d", &id);
+        clearBuff();
+        DICT_T *nextItem, *prevItem = NULL;
+        for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            if (id == nextItem->id)
+            {
+                isMatched = 1;
+                printf("\nEnter a new type: ");
+                getline(&dictName, &len, stdin);
+                dictName[strcspn(dictName, "\n")] = '\0';
+                free(nextItem->dictName);
+                nextItem->dictName = dictName;
+                break;
+            }
+        if (!isMatched)
+        {
+            system("clear");
+            printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+            wait();
+            return;
+        }
+        system("clear");
+        printf("Editing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (selectedDict == "place.db")
+    {
+        int isMatched = 0;
+        unsigned int id;
+        char *dictName = NULL;
+        size_t len = 0;
+        system("clear");
+        printf("Enter an ID of item to edit: ");
+        scanf("%d", &id);
+        clearBuff();
+        DICT_P *nextItem, *prevItem = NULL;
+        for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
+            if (id == nextItem->id)
+            {
+                isMatched = 1;
+                printf("\nEnter a new place: ");
+                getline(&dictName, &len, stdin);
+                dictName[strcspn(dictName, "\n")] = '\0';
+                free(nextItem->dictName);
+                nextItem->dictName = dictName;
+                break;
+            }
+        if (!isMatched)
+        {
+            system("clear");
+            printf("The ID %d doesn't exist.\nPress ENTER to continue...", id);
+            wait();
+            return;
+        }
+        system("clear");
+        printf("Editing is successful.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+}

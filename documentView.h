@@ -21,8 +21,8 @@ void putDict_T(unsigned int, char *);
 void putDict_P(unsigned int, char *);
 void putMain_Data(unsigned int, char *, char *, char *, char *, unsigned int);
 void matchItem(unsigned int, unsigned int, char **, char **);
-void openFDict_P();
-void openFDict_T();
-void openIn();
+void openFDict_P(char *);
+void openFDict_T(char *);
+void openIn(char *);
 
 #endif // DOCUMENTVIEW_H

@@ -16,9 +16,9 @@ DICT_P *headDict_p = NULL;
 MAIN_DATA *headMain_data = NULL;
 FILE *in = NULL, *fDict_T = NULL, *fDict_P = NULL;
 
-void openFDict_P()
+void openFDict_P(char *mode)
 {
-    if ((fDict_P = fopen("./DICTIONARY/place.db", "r")) == NULL)
+    if ((fDict_P = fopen("./DICTIONARY/place.db", mode)) == NULL)
     {
         system("clear");
         printf("File can't be opened.\nPress ENTER to continue...");
@@ -27,9 +27,9 @@ void openFDict_P()
     }
 }
 
-void openFDict_T()
+void openFDict_T(char *mode)
 {
-    if ((fDict_T = fopen("./DICTIONARY/type.db", "r")) == NULL)
+    if ((fDict_T = fopen("./DICTIONARY/type.db", mode)) == NULL)
     {
         system("clear");
         printf("File can't be opened.\nPress ENTER to continue...");
@@ -38,11 +38,11 @@ void openFDict_T()
     }
 }
 
-void openIn()
+void openIn(char *mode)
 {
     char path[256] = "./DATA/";
     strcat(path, selectedFile->dirItemName);
-    if ((in = fopen(path, "r")) == NULL)
+    if ((in = fopen(path, mode)) == NULL)
     {
         system("clear");
         printf("File can't be opened.\nPress ENTER to continue...");
@@ -54,7 +54,7 @@ void openIn()
 void createData()
 {
     if (!in)
-        openIn();
+        openIn("r");
     if (!numOfEnt)
     {
         while (!feof(in))
@@ -111,7 +111,7 @@ void putData(unsigned int id, char *codeItem, unsigned int idType, unsigned int 
 void createDict_T()
 {
     if (!fDict_T)
-        openFDict_T();
+        openFDict_T("r");
     if (!numOfDict_T)
     {
         while (!feof(fDict_T))
@@ -156,7 +156,7 @@ void putDict_T(unsigned int id, char *dictName)
 void createDict_P()
 {
     if (!fDict_P)
-        openFDict_P();
+        openFDict_P("r");
     if (!numOfDict_P)
     {
         while (!feof(fDict_P))

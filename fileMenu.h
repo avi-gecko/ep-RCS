@@ -2,13 +2,13 @@
 #define FILEMENU_H
 #include "structs.h"
 
+extern  DIR_ITEM *headDirItems;
+extern  DIR_ITEM *selectedFile;
+
 void showFileMenu();
 void selectFile();
 void putItem(char *, int);
 void close();
-
-extern  DIR_ITEM *headDirItems;
-extern  DIR_ITEM *selectedFile;
-
+void save();
 
 #endif // FILEMENU_H

@@ -35,7 +35,7 @@ void showFileMenu()
         switch(ans)
         {
             case 1: selectFile(); break;
-            case 2: break;
+            case 2: save(); break;
             case 3: close(); break;
             case 4: return;
             default: {
@@ -178,5 +178,33 @@ void close()
     numOfEnt = 0;
     system("clear");
     printf("File is successfully closed.\nPress ENTER to continue...");
+    wait();
+}
+
+void save()
+{
+    if (!selectedFile)
+    {
+        system("clear");
+        printf("Files isn't selected. It can't be opened.\nPress ENTER to continue...");
+        wait();
+        return;
+    }
+    if (!headDict_t)
+        createDict_T();
+    if (!headDict_p)
+        createDict_P();
+    if (!headData)
+        createData();
+    if (!headMain_data)
+        createMain_Data();
+    openIn("w");
+    DATA *nextItem;
+    for (nextItem = headData; nextItem != NULL; nextItem = nextItem->next)
+        fprintf(in, "%d;%s;%d;%d;%s;%d;\n", nextItem->id, nextItem->codeItem, nextItem->idType, nextItem->idPlace, nextItem->date, nextItem->cost);
+    fclose(in);
+    in = NULL;
+    system("clear");
+    printf("Saving is successful.\nPress ENTER to continue...");
     wait();
 }

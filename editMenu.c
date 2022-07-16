@@ -348,6 +348,7 @@ void editRecord()
             printf("\nEnter a cost of RCS: ");
             scanf("%d", &cost);
             clearBuff();
+            nextItem->cost = cost;
             break;
         }
     if (!isMatchedG)

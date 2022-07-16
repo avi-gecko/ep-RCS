@@ -23,6 +23,7 @@ typedef struct DICT_T
 {
     unsigned int id;
     char *dictName;
+    int isAdded;
     struct DICT_T *next;
 } DICT_T;
 
@@ -30,6 +31,7 @@ typedef struct DICT_P
 {
     unsigned int id;
     char *dictName;
+    int isAdded;
     struct DICT_P *next;
 } DICT_P;
 

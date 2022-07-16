@@ -180,6 +180,7 @@ void addRecordDict()
                     break;
         }
         newItem = (DICT_T *) malloc(sizeof(DICT_T));
+        newItem->isAdded = 1;
         system("clear");
         printf("Enter a new type: ");
         getline(&dictName, &len, stdin);
@@ -219,6 +220,7 @@ void addRecordDict()
                     break;
         }
         newItem = (DICT_P *) malloc(sizeof(DICT_P));
+        newItem->isAdded = 1;
         system("clear");
         printf("Enter a new type: ");
         getline(&dictName, &len, stdin);
@@ -271,6 +273,13 @@ void delRecordDict()
         for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
+                if (nextItem->isAdded != 1)
+                {
+                    system("clear");
+                    printf("Item with ID %d can't be deleted, because it's a standart item.\nPress ENTER to continue...", id);
+                    wait();
+                    return;
+                }
                 isMatched = 1;
                 if (!prevItem)
                 {
@@ -311,6 +320,13 @@ void delRecordDict()
         for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
+                if (nextItem->isAdded != 1)
+                {
+                    system("clear");
+                    printf("Item with ID %d can't be deleted, because it's a standart item.\nPress ENTER to continue...", id);
+                    wait();
+                    return;
+                }
                 isMatched = 1;
                 if (!prevItem)
                 {

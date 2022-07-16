@@ -6,6 +6,6 @@
 void showAbout()
 {
     system("clear");
-    printf("DBMS\nCreated by Alexey Il'in ICTMS 1-5\nPress ENTER to continue...");
+    printf("Database management system for rainforced concrete structures.\nCreated by Alexey Ilin ICTMS 1-5\nPress ENTER to continue...");
     wait();
 }

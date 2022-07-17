@@ -99,7 +99,7 @@ void addRecord()
     printf("\nEnter a ID of type of RCS: ");
     scanf("%d", &idType);
     clearBuff();
-    DICT_T *nextItemT;
+    DICT *nextItemT;
     for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
         if (idType == nextItemT->id)
             isMatched = 1;
@@ -116,7 +116,7 @@ void addRecord()
     printf("\nEnter a ID of of place in the warehouse of RCS: ");
     scanf("%d", &idPlace);
     clearBuff();
-    DICT_P *nextItemP;
+    DICT *nextItemP;
     for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
     if (idPlace == nextItemP->id)
         isMatched = 1;
@@ -303,7 +303,7 @@ void editRecord()
             printf("\nEnter a ID of type of RCS: ");
             scanf("%d", &idType);
             clearBuff();
-            DICT_T *nextItemT;
+            DICT *nextItemT;
             for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
                 if (idType == nextItemT->id)
                     isMatched = 1;
@@ -319,7 +319,7 @@ void editRecord()
             printf("\nEnter a ID of of place in the warehouse of RCS: ");
             scanf("%d", &idPlace);
             clearBuff();
-            DICT_P *nextItemP;
+            DICT *nextItemP;
             for (nextItemP = headDict_p; nextItemP != NULL; nextItemP = nextItemP->next)
             if (idPlace == nextItemP->id)
                 isMatched = 1;

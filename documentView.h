@@ -6,8 +6,7 @@ extern unsigned int numOfEnt;
 extern unsigned int numOfDict_T;
 extern unsigned int numOfDict_P;
 extern DATA *headData;
-extern DICT_T *headDict_t;
-extern DICT_P *headDict_p;
+extern DICT *headDict_p, *headDict_t;
 extern MAIN_DATA *headMain_data;
 extern FILE *in, *fDict_T, *fDict_P;
 

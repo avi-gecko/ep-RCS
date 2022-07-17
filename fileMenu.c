@@ -137,7 +137,7 @@ void close()
     }
     if (headDict_t && !selectedDict)
     {
-        DICT_T *nextItem, *prevItem = headDict_t;
+        DICT *nextItem, *prevItem = headDict_t;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             free(prevItem->dictName);
@@ -150,7 +150,7 @@ void close()
     }
     if (headDict_p && !selectedDict)
     {
-        DICT_P *nextItem, *prevItem = headDict_p;
+        DICT *nextItem, *prevItem = headDict_p;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             free(prevItem->dictName);

@@ -32,12 +32,12 @@ void exportToTxt()
         return;
     }
     MAIN_DATA *nextItem;
-    fprintf(out, "--------------------------------------------------------------------------\n");
+    fprintf(out, ".------------------------------------------------------------------------.\n");
     fprintf(out, "|%-6s|%-9s|%-21s|%-15s|%-8s|%8s|\n", "ID", "Item code", "Type", "Place", "Date", "Cost");
-    fprintf(out, "--------------------------------------------------------------------------\n");
+    fprintf(out, "|------------------------------------------------------------------------|\n");
     for (nextItem = headMain_data; nextItem != NULL; nextItem = nextItem->next)
         fprintf(out, "|%-6d|%-9s|%-21s|%-15s|%-8s|%8d|\n", nextItem->id, nextItem->codeItem, nextItem->type, nextItem->place, nextItem->date, nextItem->cost);
-    fprintf(out, "--------------------------------------------------------------------------\n");
+    fprintf(out, "'------------------------------------------------------------------------'\n");
     fclose(out);
     out = NULL;
     system("clear");

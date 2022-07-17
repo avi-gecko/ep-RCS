@@ -86,7 +86,7 @@ void closeDict()
     selectedDict = NULL;
     if (headDict_t)
     {
-        DICT_T *nextItem, *prevItem = headDict_t;
+        DICT *nextItem, *prevItem = headDict_t;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             free(prevItem->dictName);
@@ -99,7 +99,7 @@ void closeDict()
     }
     if (headDict_p)
     {
-        DICT_P *nextItem, *prevItem = headDict_p;
+        DICT *nextItem, *prevItem = headDict_p;
         for (nextItem = prevItem->next; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             free(prevItem->dictName);
@@ -130,7 +130,7 @@ void showDict()
         createDict_P();
     if (selectedDict == "type.db")
     {
-        DICT_T *nextItem;
+        DICT *nextItem;
         system("clear");
         printf(".-------------------.\n");
         printf("|%-3s|%-15s|\n", "ID", "Directory name");
@@ -143,7 +143,7 @@ void showDict()
     }
     if (selectedDict == "place.db")
     {
-        DICT_P *nextItem;
+        DICT *nextItem;
         system("clear");
         printf(".-------------------.\n");
         printf("|%-3s|%-15s|\n", "ID", "Directory name");
@@ -174,7 +174,7 @@ void addRecordDict()
     {
         char *dictName = NULL;
         size_t len = 0;
-        DICT_T *nextItem, *prevItem = NULL, *newItem;
+        DICT *nextItem, *prevItem = NULL, *newItem;
         for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             if (headDict_t->id != 1)
@@ -183,7 +183,7 @@ void addRecordDict()
                 if(nextItem->id - prevItem->id != 1)
                     break;
         }
-        newItem = (DICT_T *) malloc(sizeof(DICT_T));
+        newItem = (DICT *) malloc(sizeof(DICT));
         system("clear");
         printf("Enter a new type: ");
         getline(&dictName, &len, stdin);
@@ -213,7 +213,7 @@ void addRecordDict()
     {
         char *dictName = NULL;
         size_t len = 0;
-        DICT_P *nextItem, *prevItem = NULL, *newItem;
+        DICT *nextItem, *prevItem = NULL, *newItem;
         for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
         {
             if (headDict_p->id != 1)
@@ -222,7 +222,7 @@ void addRecordDict()
                 if(nextItem->id - prevItem->id != 1)
                     break;
         }
-        newItem = (DICT_P *) malloc(sizeof(DICT_P));
+        newItem = (DICT *) malloc(sizeof(DICT));
         system("clear");
         printf("Enter a new type: ");
         getline(&dictName, &len, stdin);
@@ -271,7 +271,7 @@ void delRecordDict()
         printf("Enter an id of item to delete: ");
         scanf("%d", &id);
         clearBuff();
-        DICT_T *nextItem, *prevItem = NULL;
+        DICT *nextItem, *prevItem = NULL;
         for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
@@ -311,7 +311,7 @@ void delRecordDict()
         printf("Enter an id of item to delete: ");
         scanf("%d", &id);
         clearBuff();
-        DICT_P *nextItem, *prevItem = NULL;
+        DICT *nextItem, *prevItem = NULL;
         for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
@@ -368,7 +368,7 @@ void editRecordDict()
         printf("Enter an ID of item to edit: ");
         scanf("%d", &id);
         clearBuff();
-        DICT_T *nextItem, *prevItem = NULL;
+        DICT *nextItem, *prevItem = NULL;
         for (nextItem = headDict_t; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
@@ -402,7 +402,7 @@ void editRecordDict()
         printf("Enter an ID of item to edit: ");
         scanf("%d", &id);
         clearBuff();
-        DICT_P *nextItem, *prevItem = NULL;
+        DICT *nextItem, *prevItem = NULL;
         for (nextItem = headDict_p; nextItem != NULL; prevItem = nextItem, nextItem = nextItem->next)
             if (id == nextItem->id)
             {
@@ -444,7 +444,7 @@ void saveDict()
     if (selectedDict == "type.db")
     {
         openFDict_T("w");
-        DICT_T *nextItem;
+        DICT *nextItem;
         for (nextItem = headDict_t; nextItem != NULL; nextItem = nextItem->next)
             fprintf(fDict_T, "%d;%s;\n", nextItem->id, nextItem->dictName);
         fclose(fDict_T);
@@ -457,7 +457,7 @@ void saveDict()
     if (selectedDict == "place.db")
     {
         openFDict_P("w");
-        DICT_P *nextItem;
+        DICT *nextItem;
         for (nextItem = headDict_p; nextItem != NULL; nextItem = nextItem->next)
             fprintf(fDict_P, "%d;%s;\n", nextItem->id, nextItem->dictName);
         fclose(fDict_P);

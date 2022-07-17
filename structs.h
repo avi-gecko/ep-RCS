@@ -19,19 +19,12 @@ typedef struct DATA
     struct DATA *next;
 } DATA;
 
-typedef struct DICT_T
+typedef struct DICT
 {
     unsigned int id;
     char *dictName;
-    struct DICT_T *next;
-} DICT_T;
-
-typedef struct DICT_P
-{
-    unsigned int id;
-    char *dictName;
-    struct DICT_P *next;
-} DICT_P;
+    struct DICT *next;
+} DICT;
 
 typedef struct MAIN_DATA
 {

@@ -11,8 +11,8 @@ unsigned int numOfEnt = 0;
 unsigned int numOfDict_T = 0;
 unsigned int numOfDict_P = 0;
 DATA *headData = NULL;
-DICT_T *headDict_t = NULL;
-DICT_P *headDict_p = NULL;
+DICT *headDict_t = NULL;
+DICT *headDict_p = NULL;
 MAIN_DATA *headMain_data = NULL;
 FILE *in = NULL, *fDict_T = NULL, *fDict_P = NULL;
 
@@ -138,9 +138,9 @@ void createDict_T()
 
 void putDict_T(unsigned int id, char *dictName)
 {
-    DICT_T *newItem, *nextItem, *prevItem = NULL;
+    DICT *newItem, *nextItem, *prevItem = NULL;
     for (nextItem = headDict_t; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
-    newItem = (DICT_T *) malloc(sizeof(DICT_T));
+    newItem = (DICT *) malloc(sizeof(DICT));
     newItem->id = id;
     newItem->dictName = dictName;
     if (nextItem)
@@ -183,9 +183,9 @@ void createDict_P()
 
 void putDict_P(unsigned int id, char *dictName)
 {
-    DICT_P *newItem, *nextItem, *prevItem = NULL;
+    DICT *newItem, *nextItem, *prevItem = NULL;
     for (nextItem = headDict_p; nextItem != NULL && (id > nextItem->id); prevItem = nextItem, nextItem = nextItem->next);
-    newItem = (DICT_P *) malloc(sizeof(DICT_P));
+    newItem = (DICT *) malloc(sizeof(DICT));
     newItem->id = id;
     newItem->dictName = dictName;
     if (nextItem)
@@ -200,8 +200,8 @@ void putDict_P(unsigned int id, char *dictName)
 
 void createMain_Data()
 {
-    DICT_P *nextItemP;
-    DICT_T *nextItemT;
+    DICT *nextItemP;
+    DICT *nextItemT;
     DATA *nextItemD;
     unsigned int id;
     char *codeItem = NULL;
@@ -255,8 +255,8 @@ void createMain_Data()
 
 void matchItem(unsigned int idType, unsigned int idPlace, char **type, char **place)
 {
-    DICT_P *nextItemP;
-    DICT_T *nextItemT;
+    DICT *nextItemP;
+    DICT *nextItemT;
     for (nextItemT = headDict_t; nextItemT != NULL; nextItemT = nextItemT->next)
         if (idType == nextItemT->id)
         {

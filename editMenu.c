@@ -277,7 +277,7 @@ void editRecord()
     ssize_t read = 0;
 
     system("clear");
-    printf("Enter an id of item to delete: ");
+    printf("Enter an id of item to edit: ");
     scanf("%d", &id);
     clearBuff();
     DATA *nextItem;
